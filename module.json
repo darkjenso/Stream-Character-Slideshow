@@ -21,15 +21,15 @@
   "dependencies": [
     {
       "name": "colorsettings",
-      "type": "optional"
+      "type": "required"
     },
     {
       "name": "lib-wrapper",
-      "type": "optional"
+      "type": "required"
     },
     {
       "name": "socketlib",
-      "type": "optional"
+      "type": "required"
     }
   ],
   "readme": "https://github.com/darkjenso/Stream-Character-Slideshow/blob/main/README.md",
