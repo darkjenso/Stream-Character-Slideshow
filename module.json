@@ -19,8 +19,8 @@
       "path": "lang/en.json"
     }
   ],
-  "url": "https://github.com/darkjenso/Stream-Character-Slideshow",
-  "manifest": "https://raw.githubusercontent.com/darkjenso/streamcharacterslideshow/main/module.json",
+  "url": "https://github.com/darkjenso/streamcharacterslideshow",
+  "manifest": "https://raw.githubusercontent.com/darkjenso/streamcharacterslideshow/refs/heads/main/module.json",
   "download": "https://github.com/darkjenso/streamcharacterslideshow/releases/download/0.0.7/streamcharacterslideshow.zip",
   "socket": true,
   "relationships": {
