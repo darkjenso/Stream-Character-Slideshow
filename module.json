@@ -5,19 +5,13 @@
   "title": "Stream Character Slideshow",
   "description": "A Foundry VTT module that creates a character stat overlay for OBS streaming. Customizable layout, animations, and color themes.",
   "version": "0.0.5",
-  "authors": [
-    {
-      "name": "DarkJenso",
-      "url": "https://github.com/darkjenso"
-    }
-  ],
+  "author": "Jen",
   "compatibility": {
-    "minimum": "11",
+    "minimum": "12",
     "verified": "12"
   },
-  "esmodules": ["main.js"],
+  "scripts": ["main.js"],
   "styles": ["styles.css"],
-  "scripts": [],
   "languages": [
     {
       "lang": "en",
@@ -25,23 +19,25 @@
       "path": "lang/en.json"
     }
   ],
+  "url": "https://github.com/darkjenso/Stream-Character-Slideshow",
   "manifest": "https://raw.githubusercontent.com/darkjenso/Stream-Character-Slideshow/main/module.json",
   "download": "https://github.com/darkjenso/Stream-Character-Slideshow/releases/download/0.0.5/Stream-Character-Slideshow.zip",
-  "library": false,
-  "dependencies": [
-    {
-      "name": "colorsettings",
-      "type": "required"
-    },
-    {
-      "name": "lib-wrapper",
-      "type": "required"
-    },
-    {
-      "name": "socketlib",
-      "type": "required"
-    }
-  ],
-  "readme": "https://github.com/darkjenso/Stream-Character-Slideshow/blob/main/README.md",
-  "changelog": "https://github.com/darkjenso/Stream-Character-Slideshow/blob/main/CHANGELOG.md"
+  "socket": true,
+  "relationships": {
+    "requires": [
+      {
+        "id": "colorsettings",
+        "type": "module"
+      },
+      {
+        "id": "lib-wrapper",
+        "type": "module"
+      },
+      {
+        "id": "socketlib",
+        "type": "module"
+      }
+    ]
+  },
+  "protected": false
 }
