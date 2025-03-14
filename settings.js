@@ -1,12 +1,7 @@
 export function registerSettings() {
-    console.log("Stream Character Slideshow | Registering Settings...");
+    console.log("✅ Registering Stream Character Slideshow Settings...");
 
-    // Check if colorsettings is installed
-    if (!game.modules.get("colorsettings")?.active) {
-        ui.notifications.warn("Stream Character Slideshow: 'colorsettings' is required for color customization.");
-    }
-
-    /*** 🔄 General Module Settings ***/
+    // Register all settings
     game.settings.register("streamcharacterslideshow", "enableSlideshow", {
         name: "Enable Slideshow",
         hint: "Cycle through active characters on a delay.",
@@ -25,28 +20,13 @@ export function registerSettings() {
         default: 10
     });
 
-    game.settings.register("streamcharacterslideshow", "displayMode", {
-        name: "Display Mode",
-        hint: "Choose between Browser Source or Green Screen pop-up.",
-        scope: "client",
-        config: true,
-        type: String,
-        choices: {
-            "browser": "OBS Browser Source",
-            "green-screen": "Green Screen Window"
-        },
-        default: "browser"
-    });
-
-    /*** 🎨 Color Customization (Using Color Picker) ***/
     game.settings.register("streamcharacterslideshow", "backgroundColor", {
         name: "Background Color",
         hint: "Choose a background color for the character display.",
         scope: "client",
         config: true,
         type: String,
-        default: "#000000",
-        onChange: value => document.documentElement.style.setProperty('--background-color', value)
+        default: "#000000"
     });
 
     game.settings.register("streamcharacterslideshow", "textColor", {
@@ -55,8 +35,7 @@ export function registerSettings() {
         scope: "client",
         config: true,
         type: String,
-        default: "#FFFFFF",
-        onChange: value => document.documentElement.style.setProperty('--text-color', value)
+        default: "#FFFFFF"
     });
 
     game.settings.register("streamcharacterslideshow", "hpBarColor", {
@@ -65,8 +44,7 @@ export function registerSettings() {
         scope: "client",
         config: true,
         type: String,
-        default: "#FF0000",
-        onChange: value => document.documentElement.style.setProperty('--hp-bar-color', value)
+        default: "#FF0000"
     });
 
     game.settings.register("streamcharacterslideshow", "hpBarOutlineColor", {
@@ -75,64 +53,24 @@ export function registerSettings() {
         scope: "client",
         config: true,
         type: String,
-        default: "#FFFFFF",
-        onChange: value => document.documentElement.style.setProperty('--hp-bar-outline-color', value)
+        default: "#FFFFFF"
     });
 
-    /*** 🏗️ Layout Customization ***/
-    game.settings.register("streamcharacterslideshow", "enableLayoutEditor", {
-        name: "Enable Layout Editor",
-        hint: "Open the drag-and-drop layout editor to customize element positions.",
-        scope: "client",
-        config: true,
-        type: Boolean,
-        default: true
-    });
-
-    /*** 🔄 Animation Settings ***/
-    game.settings.register("streamcharacterslideshow", "animationStyle", {
-        name: "Transition Animation",
-        hint: "Choose the transition animation style between characters.",
+    // Register the new settings for layout customization
+    game.settings.register("streamcharacterslideshow", "charNamePosition", {
+        name: "Character Name Position",
+        hint: "Choose where the character name appears in the overlay.",
         scope: "client",
         config: true,
         type: String,
+        default: "top-center", // Default position
         choices: {
-            "fade": "Fade",
-            "slide": "Slide-in",
-            "bounce": "Bounce",
-            "zoom": "Zoom",
-            "random": "Random Animation"
-        },
-        default: "fade"
+            "top-left": "Top Left",
+            "top-center": "Top Center",
+            "top-right": "Top Right",
+            "bottom-left": "Bottom Left",
+            "bottom-center": "Bottom Center",
+            "bottom-right": "Bottom Right"
+        }
     });
-
-    /*** ⚙️ HP Display Mode Settings ***/
-    game.settings.register("streamcharacterslideshow", "hpDisplayMode", {
-        name: "HP Display Mode",
-        hint: "Choose how HP is displayed.",
-        scope: "client",
-        config: true,
-        type: String,
-        choices: {
-            "numerical": "Numerical (45/62)",
-            "bar": "Visual HP Bar",
-            "hidden": "Do Not Display"
-        },
-        default: "numerical"
-    });
-
-    /*** 🎭 Toggle Labels (DEX, HP, AC, etc.) ***/
-    const labels = ["name", "hp", "ac", "str", "dex", "con", "int", "wis", "cha"];
-    labels.forEach(label => {
-        game.settings.register("streamcharacterslideshow", `showLabel-${label}`, {
-            name: `Show ${label.toUpperCase()} Label`,
-            hint: `Toggle the label for ${label.toUpperCase()}.`,
-            scope: "client",
-            config: true,
-            type: Boolean,
-            default: true
-        });
-    });
-
-    console.log("Stream Character Slideshow | Settings Registered Successfully!");
 }
