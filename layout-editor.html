@@ -1,0 +1,60 @@
+<script>
+    document.getElementById("save-layout").addEventListener("click", function () {
+        // Get the selected settings
+        const namePosition = document.getElementById("char-name-position").value;
+        const textColor = document.getElementById("text-color").value;
+        const backgroundColor = document.getElementById("background-color").value;
+
+        // Save settings in Foundry's settings
+        game.settings.set("streamcharacterslideshow", "charNamePosition", namePosition);
+        game.settings.set("streamcharacterslideshow", "textColor", textColor);
+        game.settings.set("streamcharacterslideshow", "backgroundColor", backgroundColor);
+
+        // Apply settings immediately
+        applyLayoutChanges();
+
+        // Close the editor window
+        window.close();
+    });
+
+    function applyLayoutChanges() {
+        const namePosition = game.settings.get("streamcharacterslideshow", "charNamePosition");
+        const textColor = game.settings.get("streamcharacterslideshow", "textColor");
+        const backgroundColor = game.settings.get("streamcharacterslideshow", "backgroundColor");
+
+        // Apply changes to the overlay or elements
+        document.body.style.backgroundColor = backgroundColor;
+        document.documentElement.style.setProperty('--text-color', textColor);
+
+        const nameElement = document.getElementById("char-name");
+        if (nameElement) {
+            switch (namePosition) {
+                case 'top-left':
+                    nameElement.style.textAlign = "left";
+                    break;
+                case 'top-center':
+                    nameElement.style.textAlign = "center";
+                    break;
+                case 'top-right':
+                    nameElement.style.textAlign = "right";
+                    break;
+                case 'bottom-left':
+                    nameElement.style.textAlign = "left";
+                    break;
+                case 'bottom-center':
+                    nameElement.style.textAlign = "center";
+                    break;
+                case 'bottom-right':
+                    nameElement.style.textAlign = "right";
+                    break;
+                default:
+                    nameElement.style.textAlign = "center";
+            }
+        }
+    }
+
+    // Apply the settings immediately on page load
+    window.addEventListener("load", function () {
+        applyLayoutChanges();
+    });
+</script>
