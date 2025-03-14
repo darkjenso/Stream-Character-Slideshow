@@ -1,60 +1,51 @@
-<script>
-    document.getElementById("save-layout").addEventListener("click", function () {
-        // Get the selected settings
-        const namePosition = document.getElementById("char-name-position").value;
-        const textColor = document.getElementById("text-color").value;
-        const backgroundColor = document.getElementById("background-color").value;
-
-        // Save settings in Foundry's settings
-        game.settings.set("streamcharacterslideshow", "charNamePosition", namePosition);
-        game.settings.set("streamcharacterslideshow", "textColor", textColor);
-        game.settings.set("streamcharacterslideshow", "backgroundColor", backgroundColor);
-
-        // Apply settings immediately
-        applyLayoutChanges();
-
-        // Close the editor window
-        window.close();
-    });
-
-    function applyLayoutChanges() {
-        const namePosition = game.settings.get("streamcharacterslideshow", "charNamePosition");
-        const textColor = game.settings.get("streamcharacterslideshow", "textColor");
-        const backgroundColor = game.settings.get("streamcharacterslideshow", "backgroundColor");
-
-        // Apply changes to the overlay or elements
-        document.body.style.backgroundColor = backgroundColor;
-        document.documentElement.style.setProperty('--text-color', textColor);
-
-        const nameElement = document.getElementById("char-name");
-        if (nameElement) {
-            switch (namePosition) {
-                case 'top-left':
-                    nameElement.style.textAlign = "left";
-                    break;
-                case 'top-center':
-                    nameElement.style.textAlign = "center";
-                    break;
-                case 'top-right':
-                    nameElement.style.textAlign = "right";
-                    break;
-                case 'bottom-left':
-                    nameElement.style.textAlign = "left";
-                    break;
-                case 'bottom-center':
-                    nameElement.style.textAlign = "center";
-                    break;
-                case 'bottom-right':
-                    nameElement.style.textAlign = "right";
-                    break;
-                default:
-                    nameElement.style.textAlign = "center";
-            }
-        }
-    }
-
-    // Apply the settings immediately on page load
-    window.addEventListener("load", function () {
-        applyLayoutChanges();
-    });
-</script>
+<form>
+    <div class="form-group">
+        <label for="charNamePosition">Character Name Position</label>
+        <div class="form-fields">
+            <select name="charNamePosition" id="charNamePosition">
+                <option value="top-left" {{#if (eq charNamePosition "top-left")}}selected{{/if}}>Top Left</option>
+                <option value="top-center" {{#if (eq charNamePosition "top-center")}}selected{{/if}}>Top Center</option>
+                <option value="top-right" {{#if (eq charNamePosition "top-right")}}selected{{/if}}>Top Right</option>
+                <option value="bottom-left" {{#if (eq charNamePosition "bottom-left")}}selected{{/if}}>Bottom Left</option>
+                <option value="bottom-center" {{#if (eq charNamePosition "bottom-center")}}selected{{/if}}>Bottom Center</option>
+                <option value="bottom-right" {{#if (eq charNamePosition "bottom-right")}}selected{{/if}}>Bottom Right</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="textColor">Text Color</label>
+        <div class="form-fields">
+            <input type="color" name="textColor" id="textColor" value="{{textColor}}">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="backgroundColor">Background Color</label>
+        <div class="form-fields">
+            <input type="color" name="backgroundColor" id="backgroundColor" value="{{backgroundColor}}">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="hpBarColor">HP Bar Color</label>
+        <div class="form-fields">
+            <input type="color" name="hpBarColor" id="hpBarColor" value="{{hpBarColor}}">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="hpBarOutlineColor">HP Bar Outline Color</label>
+        <div class="form-fields">
+            <input type="color" name="hpBarOutlineColor" id="hpBarOutlineColor" value="{{hpBarOutlineColor}}">
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <p class="notes">Changes will apply to the character overlay when it is next opened.</p>
+    </div>
+    
+    <button type="submit">
+        <i class="fas fa-save"></i> Save Layout
+    </button>
+</form>
