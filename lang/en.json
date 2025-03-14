@@ -1,0 +1,16 @@
+{
+  "MODULE.Name": "Stream Character Slideshow",
+  "MODULE.Description": "A Foundry VTT module that creates a character stat overlay for OBS streaming.",
+  "SETTINGS.EnableSlideshow": "Enable Slideshow",
+  "SETTINGS.EnableSlideshow_Hint": "Cycle through active characters on a delay.",
+  "SETTINGS.CycleDelay": "Slideshow Delay (Seconds)",
+  "SETTINGS.CycleDelay_Hint": "Time before switching characters.",
+  "SETTINGS.DisplayMode": "Display Mode",
+  "SETTINGS.DisplayMode_Hint": "Choose between Browser Source or Green Screen pop-up.",
+  "SETTINGS.AnimationStyle": "Transition Animation",
+  "SETTINGS.AnimationStyle_Hint": "Choose the transition animation style between characters.",
+  "SETTINGS.HPDisplayMode": "HP Display Mode",
+  "SETTINGS.HPDisplayMode_Hint": "Choose how HP is displayed.",
+  "SETTINGS.BackgroundColor": "Background Color",
+  "SETTINGS.BackgroundColor_Hint": "Choose a background color for the character display."
+}
