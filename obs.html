@@ -3,22 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Character Slideshow</title>
+    <title>Character Overlay</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="character-display">
-        <h1 id="char-name">Loading...</h1>
-        <p id="char-ac">AC: --</p>
-        <p id="char-hp">HP: --/--</p>
-        <div id="hp-bar-container">
-            <div class="hp-bar"><div id="hp-bar-fill"></div></div>
+        <h2 id="char-name">Name</h2>
+        <p id="char-ac">AC: 10</p>
+        <p id="char-hp">HP: 50/50</p>
+        <div class="hp-bar">
+            <div id="hp-bar-fill"></div>
         </div>
-        <p id="char-stats">
-            STR: --, DEX: --, CON: --, INT: --, WIS: --, CHA: --
-        </p>
+        <p id="char-stats">STR: 10, DEX: 10, CON: 10, INT: 10, WIS: 10, CHA: 10</p>
     </div>
 
-    <script src="scripts/slideshow.js"></script>
+    <script src="slideshow.js"></script>
 </body>
 </html>
