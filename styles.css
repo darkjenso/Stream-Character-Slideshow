@@ -6,14 +6,15 @@
     --background-image: none; /* Custom background from Foundry settings */
 }
 
-body {
+/* Restrict UI changes to only the character display, NOT Foundry itself */
+#character-overlay {
     background: var(--background-color) no-repeat center center;
     background-size: cover;
     font-family: Arial, sans-serif;
     color: var(--text-color);
     text-align: center;
     margin: 0;
-    padding: 0;
+    padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
