@@ -2,51 +2,77 @@ import { getCharacterData } from "./data.js";
 
 let characters = [];
 let currentIndex = 0;
+let slideshowInterval = null;
 
-// Fetch user settings from Foundry
+// ✅ Check if the setting exists before trying to access
 function getSetting(key) {
-    return game.settings.get("stream-character-slideshow", key);
+    if (!game.settings.settings.has(`streamcharacterslideshow.${key}`)) {
+        console.error(`🚨 ERROR: Setting '${key}' is missing!`);
+        return null;
+    }
+    return game.settings.get("streamcharacterslideshow", key);
 }
 
-// Start the character slideshow
+// ✅ Start Slideshow manually
 export function startSlideshow() {
+    console.log("Starting Character Slideshow...");
+
     characters = getCharacterData();
-    if (characters.length === 0) return;
+    if (characters.length === 0) {
+        console.warn("No characters available for slideshow.");
+        return;
+    }
 
-    setInterval(() => {
+    let cycleDelay = getSetting("cycleDelay");
+    if (cycleDelay === null) {
+        console.error("cycleDelay setting is missing! Aborting slideshow.");
+        return;
+    }
+
+    // Show the first character immediately
+    updateDisplay(characters[0]);
+
+    // Set interval to switch characters
+    slideshowInterval = setInterval(() => {
         if (characters.length === 0) return;
-
         currentIndex = (currentIndex + 1) % characters.length;
         updateDisplay(characters[currentIndex]);
-    }, getSetting("cycleDelay") * 1000);
-
-    updateDisplay(characters[0]);
+    }, cycleDelay * 1000);
 }
 
-// Updates the OBS display with character details
+// ✅ Stop Slideshow manually
+export function stopSlideshow() {
+    console.log("Stopping Character Slideshow...");
+    clearInterval(slideshowInterval);
+}
+
+// ✅ Prevent crashes if the overlay container is not found
 function updateDisplay(character) {
     let displayContainer = document.getElementById("character-display");
-    let animationClass = getAnimationClass();
+    if (!displayContainer) {
+        console.error("Display container not found! Ensure the overlay is open.");
+        return;
+    }
 
-    // Remove previous animation and force reflow
+    let animationClass = getAnimationClass();
     displayContainer.classList.remove("fade", "slide", "bounce", "zoom");
-    void displayContainer.offsetWidth;
+    void displayContainer.offsetWidth; // force reflow
     displayContainer.classList.add(animationClass);
 
-    // Update text elements
+    // Update the character stats
     document.getElementById("char-name").innerHTML = getLabel("name") + character.name;
     document.getElementById("char-ac").innerHTML = getLabel("ac") + `AC: ${character.AC}`;
 
+    // Handle HP display
     let hpElement = document.getElementById("char-hp");
     let hpBarFill = document.getElementById("hp-bar-fill");
 
-    // HP Display Mode: Numerical, Bar, or Hidden
     if (getSetting("hpDisplayMode") === "numerical") {
         hpElement.style.display = "block";
         hpElement.innerHTML = getLabel("hp") + `${character.currentHP}/${character.maxHP}`;
-        hpBarFill.style.width = "0%"; // Hide the bar
+        hpBarFill.style.width = "0%";
     } else if (getSetting("hpDisplayMode") === "bar") {
-        hpElement.style.display = "none"; // Hide text HP
+        hpElement.style.display = "none";
         let hpPercent = (character.currentHP / character.maxHP) * 100;
         hpBarFill.style.width = `${hpPercent}%`;
     } else {
@@ -65,7 +91,7 @@ function updateDisplay(character) {
     `;
 }
 
-// Determine the animation style
+// ✅ Animation class based on user settings
 function getAnimationClass() {
     let animationSetting = getSetting("animationStyle");
     if (animationSetting === "random") {
@@ -75,7 +101,7 @@ function getAnimationClass() {
     return animationSetting;
 }
 
-// Determine whether to show stat labels
+// ✅ Determine whether to show stat labels
 function getLabel(stat) {
     return getSetting(`showLabel-${stat}`) ? `${stat.toUpperCase()}: ` : "";
 }
