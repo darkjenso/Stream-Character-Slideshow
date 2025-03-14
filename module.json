@@ -4,13 +4,13 @@
   "name": "streamcharacterslideshow",
   "title": "Stream Character Slideshow",
   "description": "A Foundry VTT module that creates a character stat overlay for OBS streaming. Customizable layout, animations, and color themes.",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "author": "Jen",
   "compatibility": {
     "minimum": "12",
     "verified": "12"
   },
-  "scripts": ["main.js"],
+  "esmodules": ["main.js"],
   "styles": ["styles.css"],
   "languages": [
     {
@@ -20,8 +20,8 @@
     }
   ],
   "url": "https://github.com/darkjenso/streamcharacterslideshow",
-  "manifest": "https://raw.githubusercontent.com/darkjenso/streamcharacterslideshow/refs/heads/main/module.json",
-  "download": "https://github.com/darkjenso/streamcharacterslideshow/releases/download/0.0.8/streamcharacterslideshow.zip",
+  "manifest": "https://raw.githubusercontent.com/darkjenso/streamcharacterslideshow/main/module.json",
+  "download": "https://github.com/darkjenso/streamcharacterslideshow/releases/download/0.0.9/streamcharacterslideshow.zip",
   "socket": true,
   "relationships": {
     "requires": [
