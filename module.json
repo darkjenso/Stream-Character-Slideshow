@@ -16,8 +16,8 @@
   "esmodules": ["main.js"],
   "styles": ["styles.css"],
   "scripts": [],
-  "manifest": "https://raw.githubusercontent.com/darkjenso/Stream-Character-Slideshow/main/module.json",
-  "download": "https://github.com/darkjenso/Stream-Character-Slideshow/archive/refs/heads/main.zip",
+  "manifest": "https://raw.githubusercontent.com/darkjenso/Stream-Character-Slideshow/refs/heads/main/module.json",
+  "download": "https://github.com/darkjenso/Stream-Character-Slideshow/releases/download/0.0.1/Stream-Character-Slideshow.zip",
   "dependencies": [
     {
       "name": "colorsettings",
