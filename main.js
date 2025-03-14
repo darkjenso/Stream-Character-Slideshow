@@ -23,6 +23,76 @@ Hooks.once("setup", function () {
     }
 });
 
+// Layout Editor Application
+class OpenLayoutEditorApplication extends FormApplication {
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            title: "Character Layout Editor",
+            id: "character-layout-editor",
+            template: "modules/streamcharacterslideshow/layout-editor.html",
+            width: 600,
+            height: 500
+        });
+    }
+
+    getData() {
+        return {
+            charNamePosition: game.settings.get("streamcharacterslideshow", "charNamePosition"),
+            textColor: game.settings.get("streamcharacterslideshow", "textColor"),
+            backgroundColor: game.settings.get("streamcharacterslideshow", "backgroundColor"),
+            hpBarColor: game.settings.get("streamcharacterslideshow", "hpBarColor"),
+            hpBarOutlineColor: game.settings.get("streamcharacterslideshow", "hpBarOutlineColor")
+        };
+    }
+
+    async _updateObject(event, formData) {
+        for (let [key, value] of Object.entries(formData)) {
+            await game.settings.set("streamcharacterslideshow", key, value);
+        }
+    }
+}
+
+// Open Overlay Application
+class OpenOverlayApplication extends FormApplication {
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            title: "Character Overlay",
+            id: "character-overlay",
+            template: "modules/streamcharacterslideshow/obs-control.html",
+            width: 400,
+            height: 300
+        });
+    }
+
+    getData() {
+        return {
+            isRunning: false // You might want to track this state
+        };
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+        html.find("#open-overlay").click(this._onOpenOverlay.bind(this));
+        html.find("#start-slideshow").click(this._onStartSlideshow.bind(this));
+        html.find("#stop-slideshow").click(this._onStopSlideshow.bind(this));
+    }
+
+    _onOpenOverlay(event) {
+        event.preventDefault();
+        window.open("modules/streamcharacterslideshow/obs.html", "Character Display", "width=800,height=400");
+    }
+
+    _onStartSlideshow(event) {
+        event.preventDefault();
+        startSlideshow();
+    }
+
+    _onStopSlideshow(event) {
+        event.preventDefault();
+        stopSlideshow();
+    }
+}
+
 // Register Menu Buttons
 Hooks.once("ready", function () {
     // Register Menu for Opening Overlay
@@ -48,7 +118,7 @@ Hooks.once("ready", function () {
     console.log("Stream Character Slideshow | Waiting for user input.");
 });
 
-// ✅ Add Scene Control Button for easier access
+// Add Scene Control Button for easier access
 Hooks.on("getSceneControlButtons", (controls) => {
     const tokenControls = controls.find(control => control.name === "token");
     if (tokenControls) {
@@ -61,52 +131,3 @@ Hooks.on("getSceneControlButtons", (controls) => {
         });
     }
 });
-
-// Open Overlay Application
-class OpenOverlayApplication extends FormApplication {
-    static get defaultOptions() {
-        return foundry.utils.mergeObject(super.defaultOptions, {
-            title: "Character Overlay",
-            id: "character-overlay",
-            width: 400,
-            height: 300
-        });
-    }
-
-    activateListeners(html) {
-        super.activateListeners(html);
-        setTimeout(() => {
-            // Open OBS window here
-            window.open("modules/streamcharacterslideshow/obs.html", "Character Display", "width=800,height=400");
-        }, 200);
-    }
-}
-
-// Layout Editor Application (For future expansion)
-class OpenLayoutEditorApplication extends FormApplication {
-    static get defaultOptions() {
-        return foundry.utils.mergeObject(super.defaultOptions, {
-            title: "Character Layout Editor",
-            id: "character-layout-editor",
-            width: 600,
-            height: 500
-        });
-    }
-
-    getData() {
-        return {
-            currentLayout: game.settings.get("streamcharacterslideshow", "charNamePosition") // Ensure this setting exists
-        };
-    }
-
-    activateListeners(html) {
-        super.activateListeners(html);
-        html.find("#save-layout").click(this._onSaveLayout.bind(this));
-    }
-
-    async _onSaveLayout(event) {
-        const namePosition = this.element.find("#char-name-position").val();
-        await game.settings.set("streamcharacterslideshow", "charNamePosition", namePosition);
-        this.render(true);
-    }
-}
